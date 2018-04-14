@@ -3,7 +3,8 @@ var router = require("./router");
 var requestHandlers =require("./requestHandlers");
 
 var handle = {}
-handle["/"] = requestHandlers.hello;
-handle["/get"] = requestHandlers.get;
+handle["/upload/"] = requestHandlers.hello;
+handle["/upload/get"] = requestHandlers.get;
+handle["/upload/postmd"] = requestHandlers.postmd;
 
 server.start(router.route, handle);

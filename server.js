@@ -1,7 +1,7 @@
 var http = require("http");
 var url = require("url");
-var querystring = require("querystring");
-function start(route, handle) {
+function start(route, handle) 
+{
     //function onRequest(request, response) {
     //    var urlObj = url.parse(request.url);
     //    var pathname = urlObj.pathname;
@@ -11,26 +11,33 @@ function start(route, handle) {
     //    route(pathname, query, handle, response);
     //}
 
-    function onRequest(req, res){
-        req.setEncoding('utf-8');
+    function onRequest(request, response)
+    {
+        request.setEncoding('utf-8');
         var postData = ""; //POST & GET ： name=zzl&email=zzl@sina.com
         
-        req.addListener("data", function (postDataChunk) {
+        request.addListener("data", function (postDataChunk) 
+        {
             postData += postDataChunk;
         });
         
-        req.addListener("end", function () {
+        request.addListener("end", function () {
             console.log('数据接收完毕');
-	    var urlObj = url.parse(req.url);
+	        var urlObj = url.parse(request.url);
             var pathname = urlObj.pathname;
-	    console.log(pathname);
-            var params = querystring.parse(postData);
-            console.log(params);
-            console.log(params["name"]);
-            res.writeHead(200, {
-                "Content-Type": "text/plain;charset=utf-8"
-            });
-            res.end("数据提交完毕");
+            var query = urlObj.query;
+            console.log(pathname);
+            console.log(query);
+            
+            if(pathname == '/upload/postmd')
+            {
+                route(pathname, postData, handle, response);
+            }
+            else
+            {
+
+                route(pathname, query, handle, response);
+            }
         });
     }
     http.createServer(onRequest).listen(4000);
