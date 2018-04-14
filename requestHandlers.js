@@ -1,6 +1,7 @@
 var querystring = require("querystring");
 var fs = require("fs");
 var moment = require('moment');
+var path=require('path');
 
 function getText(response) {
     var text = "Winnie the Witch";
@@ -108,7 +109,8 @@ function postmd(query, response)
 	    var _today = moment();
 	    var date = _today.format("YYYY-MM-DD-");
 	    var datetime =  _today.format("YYYY-MM-DD HH:mm:ss");
-	    var filepath = '/data/md_articles/' + date + filename + '.md';
+	    //var filepath = '/data/md_articles/' + date + filename + '.md';
+	    var filepath = path.join('/data/md_articles/', site_type, article_type, date + filename + '.md');
 	    console.log(filepath);
             md_data = md_data.replace('{datetime}', datetime);
 	    fs.writeFileSync(filepath, md_data);
