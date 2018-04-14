@@ -21,6 +21,9 @@ function start(route, handle) {
         
         req.addListener("end", function () {
             console.log('数据接收完毕');
+	    var urlObj = url.parse(req.url);
+            var pathname = urlObj.pathname;
+	    console.log(pathname);
             var params = querystring.parse(postData);
             console.log(params);
             console.log(params["name"]);
