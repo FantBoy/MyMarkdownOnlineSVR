@@ -128,6 +128,21 @@ function postmd(query, response)
     response.end(JSON.stringify(result));
 }
 
+function gethistorydrafts(query, response)
+{
+    var result = {ret:0, msg:''};
+    result['drafts'] = [
+        {type: 'WIKI', name: '2018-04-15-cpdsfdf.md'}
+    ];
+    console.log(filename);
+    response.writeHead(200, {
+        "Content-Type": "text/plain"
+    });
+    response.end(JSON.stringify(result));
+}
+
 exports.get = get;
 exports.hello = hello;
 exports.postmd = postmd;
+
+exports.gethistorydrafts = gethistorydrafts;
