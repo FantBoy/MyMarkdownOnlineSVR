@@ -134,7 +134,6 @@ function gethistorydrafts(query, response)
     result['drafts'] = [
         {type: 'WIKI', name: '2018-04-15-cpdsfdf.md'}
     ];
-    console.log(filename);
     response.writeHead(200, {
         "Content-Type": "text/plain"
     });
