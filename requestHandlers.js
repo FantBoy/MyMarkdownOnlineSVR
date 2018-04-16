@@ -140,8 +140,16 @@ function gethistorydrafts(query, response)
     response.end(JSON.stringify(result));
 }
 
+function gitalkcallback(query, response)
+{
+    var params = querystring.parse(query);
+    console.log(params);    
+}
+
 exports.get = get;
 exports.hello = hello;
 exports.postmd = postmd;
 
 exports.gethistorydrafts = gethistorydrafts;
+
+exports.gitalkcallback = gitalkcallback;

@@ -9,4 +9,5 @@ handle["/upload/postmd"] = requestHandlers.postmd;
 handle["/upload/gethistorydrafts"] = requestHandlers.gethistorydrafts;
 
 
+handle["/gitalk/callback"] = requestHandlers.gitalkcallback;
 server.start(router.route, handle);
