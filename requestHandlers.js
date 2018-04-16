@@ -135,7 +135,8 @@ function gethistorydrafts(query, response)
     var result = {ret:0, msg:''};
     var rd = require('rd');
     result['drafts'] = {
-        BLOG: rd.readFileSync('/data/md_articles')
+        BLOG: rd.readFileSync('/data/md_articles/BLOG/DRAFT'),
+	WIKI: rd.readFileSync('/data/md_articles/WIKI/DRAFT'),
     }
     response.writeHead(200, {
         "Content-Type": "text/plain"
