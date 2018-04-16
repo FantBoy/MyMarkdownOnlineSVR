@@ -1,7 +1,9 @@
+var readdirtool = require('./Tools/readdir');
 var querystring = require("querystring");
 var fs = require("fs");
 var moment = require('moment');
 var path=require('path');
+var child_process = require('child_process');
 
 function getText(response) {
     var text = "Winnie the Witch";
@@ -131,9 +133,10 @@ function postmd(query, response)
 function gethistorydrafts(query, response)
 {
     var result = {ret:0, msg:''};
-    result['drafts'] = [
-        {type: 'WIKI', name: '2018-04-15-cpdsfdf.md'}
-    ];
+    var rd = require('rd');
+    result['drafts'] = {
+        BLOG: rd.readFileSync('/data/md_articles')
+    }
     response.writeHead(200, {
         "Content-Type": "text/plain"
     });
