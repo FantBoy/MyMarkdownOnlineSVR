@@ -87,6 +87,8 @@ function postmd(query, response)
     console.log(params);
     var site_type = params['site_type'];
     var article_type = params['article_type'];
+    var article_name = params['article_name'];
+    var post_type = params['post_type'];
     var md_data = params['md_data'];
     var filename_match = params['md_data'].match(/filename: (.*)/);
     if(filename_match)
@@ -98,7 +100,8 @@ function postmd(query, response)
 	}
 	else
 	{
-
+	    while(filename[0] == ' ')
+		filename = filename.substring(1);
 	    //异步方法
 	    //fs.writeFile('/data/message.txt', '这是第一行',function(err){
 	    //    if(err) 
@@ -112,7 +115,10 @@ function postmd(query, response)
 	    var date = _today.format("YYYY-MM-DD-");
 	    var datetime =  _today.format("YYYY-MM-DD HH:mm:ss");
 	    //var filepath = '/data/md_articles/' + date + filename + '.md';
-	    var filepath = path.join('/data/md_articles/', site_type, article_type, date + filename + '.md');
+	    if('' == article_name)
+	        var filepath = path.join('/usr/share/nginx/markdown/editor.md/md_articles/', site_type, article_type, date + filename + '.md');
+            else
+		var filepath = path.join('/usr/share/nginx/markdown/editor.md/', article_name); 
 	    console.log(filepath);
             md_data = md_data.replace('{datetime}', datetime);
 	    fs.writeFileSync(filepath, md_data);
@@ -133,11 +139,37 @@ function postmd(query, response)
 function gethistorydrafts(query, response)
 {
     var result = {ret:0, msg:''};
+    var params = querystring.parse(query);
+    var site_type = params['site_type'];
+    var article_type = params['article_type'];
     var rd = require('rd');
-    result['drafts'] = {
-        BLOG: rd.readFileSync('/data/md_articles/BLOG/DRAFT'),
-	WIKI: rd.readFileSync('/data/md_articles/WIKI/DRAFT'),
-    }
+    //if(0 == type)
+    //{
+    //    result['drafts'] = {
+    //        BLOG: rd.readFileSync('/data/md_articles/BLOG/POST').concat(rd.readFileSync('/data/md_articles/BLOG/DRAFT')),
+    //        WIKI: rd.readFileSync('/data/md_articles/WIKI/POST').concat(rd.readFileSync('/data/md_articles/WIKI/DRAFT')),
+    //    }
+    //}
+    //else if(1 == type)
+    //{
+    //    result['drafts'] = {
+    //        BLOG: rd.readFileSync('/data/md_articles/BLOG/'),
+    //        WIKI: rd.readFileSync('/data/md_articles/WIKI/DRAFT'),
+    //    }
+    //}
+    //else if(2 == type)
+    //{
+    //    result['drafts'] = {
+    //        BLOG: rd.readFileSync('/data/md_articles/BLOG/DRAFT'),
+    //        WIKI: rd.readFileSync('/data/md_articles/WIKI/DRAFT'),
+    //    }
+    //}
+    var filepath = '/usr/share/nginx/markdown/editor.md/md_articles/' + site_type + '/' + article_type;
+    result['articles'] = rd.readFileSync(filepath);
+    result['articles'].forEach(function(item,index)
+    {
+        result['articles'][index] = item.replace('/usr/share/nginx/markdown/editor.md/', '');
+    });
     response.writeHead(200, {
         "Content-Type": "text/plain"
     });

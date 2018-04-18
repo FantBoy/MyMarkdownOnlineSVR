@@ -2,7 +2,7 @@
 sitetype=$1
 articletype=$2
 articlename=$3
-filepath='/data/md_articles/'$sitetype'/'$articletype'/'$articlename
+filepath='/usr/share/nginx/markdown/md_articles/'$sitetype'/'$articletype'/'$articlename
 echo $filepath
 copyfilepath=''
 
@@ -13,7 +13,7 @@ if [ $sitetype == 'BLOG' ]; then
     /usr/local/bin/jekyll build
     rm -r /usr/share/nginx/site/*
     cp -r _site/* /usr/share/nginx/site/
-    mv $filepath '/data/md_articles/'$sitetype'/POST/'$articlename
+    mv $filepath '/usr/share/nginx/markdown/md_articles/'$sitetype'/POST/'$articlename
     echo 'ok'
 elif [ $sitetype == 'WIKI' ]; then
     copyfilepath='/home/bearboyxu/MyBlogFactory/WikiSite/source/_posts/'
@@ -24,7 +24,7 @@ elif [ $sitetype == 'WIKI' ]; then
     #hexo deploy
     rm -R /usr/share/nginx/wiki/
     cp -R /home/bearboyxu/MyBlogFactory/WikiSite/public/ /usr/share/nginx/wiki/
-    mv $filepath '/data/md_articles/'$sitetype'/POST/'$articlename
+    mv $filepath '/usr/share/nginx/markdown/md_articles/'$sitetype'/POST/'$articlename
     echo 'ok'
 fi
 
