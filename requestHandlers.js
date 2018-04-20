@@ -3,7 +3,7 @@ var querystring = require("querystring");
 var fs = require("fs");
 var moment = require('moment');
 var path=require('path');
-var child_process = require('child_process');
+var releasearticletool=require('./Tools/release_article');
 
 function getText(response) {
     var text = "Winnie the Witch";
@@ -122,7 +122,17 @@ function postmd(query, response)
 	    console.log(filepath);
             md_data = md_data.replace('{datetime}', datetime);
 	    fs.writeFileSync(filepath, md_data);
+   	    filename = path.basename(filepath); 
+    	    if(post_type == 1)
+	    {
+		releasearticletool.ReleaseArticle(site_type, article_type, filename);
+	    }
+	    else if(post_type == 0)
+	    {
+		;
+	    }
 	}
+        
 
     }
     else
